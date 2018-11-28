@@ -1,0 +1,2 @@
+# spr-monolith
+Petclinic monolith
