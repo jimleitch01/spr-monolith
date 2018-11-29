@@ -4,5 +4,5 @@ FROM maven:latest
 
 COPY . . 
 
-RUN ./mvnw install 
+RUN unset MAVEN_CONFIG && ./mvnw install 
 
