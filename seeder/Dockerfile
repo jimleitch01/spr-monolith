@@ -4,5 +4,5 @@ FROM openjdk:8 AS builder
 
 COPY . . 
 
-RUN ./mvn install 
+RUN ./mvnw install 
 
