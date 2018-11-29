@@ -3,6 +3,7 @@ FROM maven:3-jdk-8
 #FROM maven:latest
 
 COPY .m2 /.m2
+
 COPY . . 
 
 RUN unset MAVEN_CONFIG && ./mvnw install 
