@@ -4,5 +4,5 @@ FROM maven:3-jdk-8
 
 COPY . . 
 
-RUN unset MAVEN_CONFIG && ./mvnw install 
+RUN ./mvnw install 
 

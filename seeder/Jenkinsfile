@@ -18,9 +18,12 @@ node {
     }
 
     stage('LocalBuild'){
-        sh 'docker build -t jim -f seeder/Dockerfile .'
+        sh './mvnw install'
     }
 
+    // stage('LocalDockerBuild'){
+    //     sh 'docker build -t jim -f seeder/Dockerfile .'
+    // }
 
 
     // stage('AzureBuild'){
