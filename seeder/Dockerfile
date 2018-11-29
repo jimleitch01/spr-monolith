@@ -3,5 +3,6 @@
 FROM maven:latest
 
 COPY . . 
+RUN mkdir root
 RUN mvn install 
 
