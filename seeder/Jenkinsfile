@@ -10,7 +10,7 @@ node {
         env.SUBSCRIPTION_ID = "57b13db8-88cf-4fe6-924b-ae10dc6fadee"
         env.AKS_NAME = "demo-aks"
         env.RESOURCE_GROUP = "demo-rg"
-        env.BRANCH_NAME = "preseed"        
+        env.BRANCH_NAME = "seeder"        
     }
 
     stage('GitCheckout'){
@@ -20,7 +20,7 @@ node {
     stage('AzureBuild'){
     withCredentials([azureServicePrincipal('test-rig-demo-jenkins')]) {  
         sh 'az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID'
-        sh 'az acr build --file preseed/Dockerfile --subscription  ${SUBSCRIPTION_ID}   --registry ${ACR_NAME} --image ${APP_NAME}:${BRANCH_NAME} .'
+        sh 'az acr build --file seeder/Dockerfile --subscription  ${SUBSCRIPTION_ID}   --registry ${ACR_NAME} --image ${APP_NAME}:${BRANCH_NAME} .'
     }}
 }
 
