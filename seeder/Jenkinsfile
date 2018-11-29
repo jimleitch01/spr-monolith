@@ -17,13 +17,13 @@ node {
         checkout scm
     }
 
-    stage('LocalBuild'){
-        sh './mvnw install'
-    }
-
-    // stage('LocalDockerBuild'){
-    //     sh 'docker build -t jim -f seeder/Dockerfile .'
+    // stage('LocalBuild'){
+    //     sh './mvnw install'
     // }
+
+    stage('LocalDockerBuild'){
+        sh 'docker build -t jim -f seeder/Dockerfile .'
+    }
 
 
     // stage('AzureBuild'){
