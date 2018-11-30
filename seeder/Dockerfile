@@ -8,7 +8,13 @@ WORKDIR /code
 
 COPY pom.xml /tmp/pom.xml
 
-RUN mvn -B -f /tmp/pom.xml -s /usr/share/maven/ref/settings-docker.xml dependency:resolve
+RUN mvn -B -s /usr/share/maven/ref/settings-docker.xml dependency:resolve
+
+RUN mvn -B -s /usr/share/maven/ref/settings-docker.xml test
+
+RUN mvn -B -s /usr/share/maven/ref/settings-docker.xml install
+
+
 
 # RUN pwd
 
