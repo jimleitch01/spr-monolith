@@ -17,9 +17,13 @@ node {
         checkout scm
     }
 
-    stage('MavenStuff'){
-            sh './mvnw install'
+stage('MavenStuff'){
+            sh 'docker build -t jim .'
     }
+
+    // stage('MavenStuff'){
+    //         sh './mvnw install'
+    // }
 
 
 
