@@ -18,7 +18,7 @@ node {
     }
 
     stage('MavenStuff'){
-            sh 'mvn install'
+            sh './mvnw install'
     }
 
 
