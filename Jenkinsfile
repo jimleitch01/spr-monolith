@@ -17,9 +17,9 @@ node {
         checkout scm
     }
 
-stage('MavenStuff'){
-            sh 'docker build -t jim .'
-    }
+// stage('MavenStuff'){
+//             sh 'docker build -t jim .'
+//     }
 
     // stage('MavenStuff'){
     //         sh './mvnw install'
@@ -36,11 +36,11 @@ stage('MavenStuff'){
     // }
 
 
-    // stage('AzureBuild'){
-    // withCredentials([azureServicePrincipal('test-rig-demo-jenkins')]) {  
-    //     sh 'az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID'
-    //     sh 'az acr build --file Dockerfile --subscription  ${SUBSCRIPTION_ID}   --registry ${ACR_NAME} --image ${APP_NAME}:${BRANCH_NAME} .'
-    // }}
+    stage('AzureBuild'){
+    withCredentials([azureServicePrincipal('test-rig-demo-jenkins')]) {  
+        sh 'az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID'
+        sh 'az acr build --file Dockerfile --subscription  ${SUBSCRIPTION_ID}   --registry ${ACR_NAME} --image ${APP_NAME}:${BRANCH_NAME} .'
+    }}
 
 
 
