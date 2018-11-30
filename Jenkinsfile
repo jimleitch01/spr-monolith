@@ -17,48 +17,54 @@ node {
         checkout scm
     }
 
-    stage('SelfTests'){
-            sh 'docker run --rm  -v "$(pwd)":/usr/src/mymaven -w /usr/src/mymaven maven:3.3-jdk-8 mvn test'
-    }
-
-    stage('ManifestCheck'){
-            sh 'sleep 5'
+    stage('MavenStuff'){
+            sh 'docker run -it --rm --name my-maven-project -v "$(pwd)":/usr/src/mymaven -v "$HOME/.m2":/root/.m2 -w /usr/src/mymaven maven:3.3-jdk-8 mvn install'
     }
 
 
-    stage('AzureBuild'){
-    withCredentials([azureServicePrincipal('test-rig-demo-jenkins')]) {  
-        sh 'az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID'
-        sh 'az acr build --file Dockerfile --subscription  ${SUBSCRIPTION_ID}   --registry ${ACR_NAME} --image ${APP_NAME}:${BRANCH_NAME} .'
-    }}
+
+    // stage('SelfTests'){
+    //         sh 'docker run --rm  -v "$(pwd)":/usr/src/mymaven -w /usr/src/mymaven maven:3.3-jdk-8 mvn test'
+    // }
+
+    // stage('ManifestCheck'){
+    //         sh 'sleep 5'
+    // }
+
+
+    // stage('AzureBuild'){
+    // withCredentials([azureServicePrincipal('test-rig-demo-jenkins')]) {  
+    //     sh 'az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID'
+    //     sh 'az acr build --file Dockerfile --subscription  ${SUBSCRIPTION_ID}   --registry ${ACR_NAME} --image ${APP_NAME}:${BRANCH_NAME} .'
+    // }}
 
 
 
-    stage('DropdownPopulator'){
-        withCredentials([azureServicePrincipal('test-rig-demo-jenkins')]) {
-            sh '''
-                set -e
-                az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID
-                az aks get-credentials --resource-group ${RESOURCE_GROUP} --subscription ${SUBSCRIPTION_ID}   --name ${AKS_NAME}
-                rm -rf ~/DROPDOWNS/
+    // stage('DropdownPopulator'){
+    //     withCredentials([azureServicePrincipal('test-rig-demo-jenkins')]) {
+    //         sh '''
+    //             set -e
+    //             az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID
+    //             az aks get-credentials --resource-group ${RESOURCE_GROUP} --subscription ${SUBSCRIPTION_ID}   --name ${AKS_NAME}
+    //             rm -rf ~/DROPDOWNS/
     
-                for NAMESPACE in $(kubectl get namespaces -o json | jq -r '.items[].metadata | select(.name | startswith("self-")) | .name ')
-                do
-                    echo NAMESPACE is $NAMESPACE
-                    mkdir -p ~/DROPDOWNS/namespaces/${NAMESPACE}
-                done
+    //             for NAMESPACE in $(kubectl get namespaces -o json | jq -r '.items[].metadata | select(.name | startswith("self-")) | .name ')
+    //             do
+    //                 echo NAMESPACE is $NAMESPACE
+    //                 mkdir -p ~/DROPDOWNS/namespaces/${NAMESPACE}
+    //             done
 
-                for REPOSITORY in $(az acr repository list --subscription ${SUBSCRIPTION_ID} --name ${ACR_NAME} | jq -r '.[]')
-                do
-                    echo REPO is $REPOSITORY
-                    for TAG in $(az acr repository show-tags --subscription ${SUBSCRIPTION_ID} --name ${ACR_NAME} --repository $REPOSITORY | jq -r .[])
-                    do
-                        mkdir -p ~/DROPDOWNS/apps/$REPOSITORY/$TAG
-                    done
-                done
-            '''
-         }   
-    }
+    //             for REPOSITORY in $(az acr repository list --subscription ${SUBSCRIPTION_ID} --name ${ACR_NAME} | jq -r '.[]')
+    //             do
+    //                 echo REPO is $REPOSITORY
+    //                 for TAG in $(az acr repository show-tags --subscription ${SUBSCRIPTION_ID} --name ${ACR_NAME} --repository $REPOSITORY | jq -r .[])
+    //                 do
+    //                     mkdir -p ~/DROPDOWNS/apps/$REPOSITORY/$TAG
+    //                 done
+    //             done
+    //         '''
+    //      }   
+    // }
 }
 
 
