@@ -17,23 +17,12 @@ node {
         checkout scm
     }
 
-// stage('MavenStuff'){
-//             sh 'docker build -t jim .'
-//     }
-
-    // stage('MavenStuff'){
-    //         sh './mvnw install'
-    // }
 
 
 
-    // stage('SelfTests'){
-    //         sh 'docker run --rm  -v "$(pwd)":/usr/src/mymaven -w /usr/src/mymaven maven:3.3-jdk-8 mvn test'
-    // }
-
-    // stage('ManifestCheck'){
-    //         sh 'sleep 5'
-    // }
+    stage('SelfTests'){
+             sh 'docker run --rm  -v "$(pwd)":/usr/src/mymaven -w /usr/src/mymaven testrigregistry.azurecr.io/spr-monolith:seed mvn test'
+    }
 
 
     stage('AzureBuild'){
