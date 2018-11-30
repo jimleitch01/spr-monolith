@@ -6,7 +6,7 @@
 node {
     stage('Init Stage'){
         env.APP_NAME = "spr-monolith"
-        env.ACR_NAME = "testrigregistry.azurecr.io"
+        env.ACR_NAME = "testrigregistry"
         env.SUBSCRIPTION_ID = "57b13db8-88cf-4fe6-924b-ae10dc6fadee"
         env.AKS_NAME = "demo-aks"
         env.RESOURCE_GROUP = "demo-rg"
@@ -21,7 +21,7 @@ node {
     withCredentials([azureServicePrincipal('test-rig-demo-jenkins')]) {     
              sh 'az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID'
              sh 'az acr login --name ${ACR_NAME}'
-             sh 'docker run --rm  -v "$(pwd)":/usr/src/mymaven -w /usr/src/mymaven ${ACR_NAME}/${APP_NAME}:seed mvn test'
+             sh 'docker run --rm  -v "$(pwd)":/usr/src/mymaven -w /usr/src/mymaven testrigregistry.azurecr.io/spr-monolith:seed mvn test'
     }}
 
     stage('AzureBuild'){
