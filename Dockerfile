@@ -1,6 +1,6 @@
 FROM openjdk:8 AS builder
-FROM testrigregistry.azurecr.io/spr-monolith:seeder
+#FROM testrigregistry.azurecr.io/spr-monolith:seeder
 COPY . . 
-RUN ./mvnw build 
+RUN ./mvnw install 
 
-FROM openjdk:8-jre 
+#FROM openjdk:8-jre 
