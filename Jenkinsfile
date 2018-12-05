@@ -43,7 +43,7 @@ node {
             sh '''
                 set -e
                 az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID
-                az aks get-credentials --resource-group ${RESOURCE_GROUP} --subscription ${SUBSCRIPTION_ID}   --name ${AKS_NAME}
+                # az aks get-credentials --resource-group ${RESOURCE_GROUP} --subscription ${SUBSCRIPTION_ID}   --name ${AKS_NAME}
                 rm -rf ~/DROPDOWNS/
     
                 for NAMESPACE in $(kubectl get namespaces -o json | jq -r '.items[].metadata | select(.name | startswith("self-")) | .name ')
