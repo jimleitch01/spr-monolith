@@ -19,15 +19,9 @@ node {
 
     stage('SelfTests'){
     withCredentials([azureServicePrincipal('test-rig-demo-jenkins')]) {     
-             sh '#az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID'
-             sh '#az acr login --name ${ACR_NAME}'
-             sh '#docker run --rm  -v "$(pwd)":/usr/src/mymaven -w /usr/src/mymaven testrigregistry.azurecr.io/spr-monolith:seed mvn test'
-             sh 'echo SKIPPING SELF TESTS'
-             sh 'echo SKIPPING SELF TESTS'
-             sh 'echo SKIPPING SELF TESTS'
-             sh 'echo SKIPPING SELF TESTS'
-             sh 'echo SKIPPING SELF TESTS'
-             sh 'echo SKIPPING SELF TESTS'
+        sh 'az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID'
+        sh 'az acr login --name ${ACR_NAME}'
+        sh 'docker run --rm  -v "$(pwd)":/usr/src/mymaven -w /usr/src/mymaven testrigregistry.azurecr.io/spr-monolith:seed mvn test'
     }}
 
     stage('AzureBuild'){
