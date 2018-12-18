@@ -1,5 +1,5 @@
-# 
-FROM maven:3.3-jdk-8 
+# FROM maven:3.3-jdk-8 
+FROM cloudbees/jnlp-slave-with-java-build-tools:latest
 
 COPY pom.xml /tmp/pom.xml
 
