@@ -12,7 +12,7 @@ COPY seeder/settings.xml seed/maven/ref/settings-docker.xml
 
 RUN mvn -f /tmp/pom.xml -B -s seed/maven/ref/settings-docker.xml dependency:resolve
 
-COPY . /code
+COPY . .
 
 RUN mvn -B -s seed/maven/ref/settings-docker.xml test
 
