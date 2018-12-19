@@ -43,14 +43,15 @@ WORKDIR /home/jenkins/seed
 
 COPY pom.xml /tmp/pom.xml
 
-COPY seeder/settings.xml seed/maven/ref/settings-docker.xml
+COPY seeder/settings.xml /usr/share/maven/ref/repository/settings-docker.xml
 
-RUN mvn -f /tmp/pom.xml -B -s seed/maven/ref/settings-docker.xml dependency:resolve
+RUN mvn -f /tmp/pom.xml -B -s /usr/share/maven/ref/repository/settings-docker.xml dependency:resolve
 
 COPY . .
 
-RUN mvn -B -s seed/maven/ref/settings-docker.xml test
+RUN mvn -B -s /usr/share/maven/ref/repository/settings-docker.xml test
 
+RUN du -s -h .
 
 EXPOSE 22
 
