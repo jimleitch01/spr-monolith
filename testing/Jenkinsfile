@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label 'linux'
+        label 'maven'
     }
     stages {
         stage('GitCheckout'){
@@ -20,3 +20,20 @@ pipeline {
         }
     }
 }
+
+
+
+
+// parallel 'test1':{
+//     node('Linux') {
+//         withAWS(credentials: 'xxxxxxxx') {
+//             s3Download bucket: 'test1', file: 'teste.txt', path: 'd2/d5/'
+//     	}
+//     }
+// }, 'test2':{
+//     node('MACOS') {
+//         withAWS(credentials: 'xxxxxxxxxx') {
+//             s3Download bucket: 'test1', file: 'teste.txt', path: 'd2/d5/'
+//     	}
+//     }
+// }
