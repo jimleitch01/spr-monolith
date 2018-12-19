@@ -1,0 +1,17 @@
+pipeline {
+    agent {
+        label 'linux'
+    }
+    stages {
+        stage('GitCheckout'){
+                checkout scm
+            }
+
+
+        stage('testing 123') {
+            steps {
+                sh 'echo hello from agent node'
+            }
+        }
+    }
+}
