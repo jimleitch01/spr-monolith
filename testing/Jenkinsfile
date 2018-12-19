@@ -14,8 +14,8 @@ pipeline {
         stage('Testing') {
             steps {
                 sh 'echo Testing'
-                sh 'find / -name settings-docker.xml '
-                sh '#mvn mvn -f /tmp/pom.xml -B -s seed/maven/ref/settings-docker.xml -Dtest=PetControllerTests surefire:test  '
+                sh '#find / -name settings-docker.xml '
+                sh 'mvn -f /tmp/pom.xml -B -s /usr/share/maven/ref/repository/settings-docker.xml -Dtest=PetControllerTests surefire:test  '
             }
         }
     }
