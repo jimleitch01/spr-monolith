@@ -12,6 +12,7 @@ pipeline {
         stage('testing 123') {
             steps {
                 sh 'echo hello from agent node'
+                sh 'mvn surefire:test -Dtest=PetControllerTests'
             }
         }
     }
