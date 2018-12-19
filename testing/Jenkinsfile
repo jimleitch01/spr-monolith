@@ -12,7 +12,7 @@ pipeline {
         stage('testing 123') {
             steps {
                 sh 'echo hello from agent node'
-                sh 'mvn surefire:test -Dtest=PetControllerTests'
+                sh 'mvn mvn -f /tmp/pom.xml -B -s seed/maven/ref/settings-docker.xml -Dtest=PetControllerTests surefire:test  '
             }
         }
     }
