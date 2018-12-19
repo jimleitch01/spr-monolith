@@ -5,13 +5,15 @@ pipeline {
     stages {
         stage('GitCheckout'){
             steps{
+                sh 'echo Git Checkout'
                 checkout scm
+                sh 'ls -l '
             }}
 
 
-        stage('testing 123') {
+        stage('Testing') {
             steps {
-                sh 'echo hello from agent node'
+                sh 'echo Testing'
                 sh 'mvn mvn -f /tmp/pom.xml -B -s seed/maven/ref/settings-docker.xml -Dtest=PetControllerTests surefire:test  '
             }
         }
