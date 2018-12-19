@@ -31,7 +31,7 @@ VOLUME "${JENKINS_AGENT_HOME}" "/tmp" "/run" "/var/run"
 WORKDIR "${JENKINS_AGENT_HOME}"
 
 COPY seeder/setup-sshd /usr/local/bin/setup-sshd
-
+RUN chmod 755 /usr/local/bin/setup-sshd
 
 ## preseed mvn packages
 
