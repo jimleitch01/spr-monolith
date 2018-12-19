@@ -4,8 +4,9 @@ pipeline {
     }
     stages {
         stage('GitCheckout'){
+            steps{
                 checkout scm
-            }
+            }}
 
 
         stage('testing 123') {
