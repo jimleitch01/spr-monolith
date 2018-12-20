@@ -9,7 +9,7 @@ pipeline {
                 checkout scm
                 sh 'echo Testing'
                 sh '#find / -name settings-docker.xml '
-                sh 'mvn -B -s /usr/share/maven/ref/repository/settings-docker.xml '
+                sh 'mvn -B -s /usr/share/maven/ref/repository/settings-docker.xml test'
             }
         }
     }
