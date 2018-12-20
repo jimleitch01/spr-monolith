@@ -1,9 +1,10 @@
 pipeline {
     agent none
     stages {
-        stage('Init Tests') {
+        stage('Tests') {
+            checkout scm
             parallel {
-                stage('JaCoCo Testing') {
+                stage('JaCoCo') {
                     agent {
                         label "maven"
                     }
@@ -16,7 +17,20 @@ pipeline {
                     //     }
                     // }
                 }
-                stage('Surefiretests') {
+                stage('sureFire') {
+                    agent {
+                        label "maven"
+                    }
+                    steps {
+                        sh "mvn -B -s /usr/share/maven/ref/repository/settings-docker.xml surefire:test"
+                    }
+                    // post {
+                    //     always {
+                    //         junit "**/TEST-*.xml"
+                    //     }
+                    // }
+                }
+                stage('jMeter') {
                     agent {
                         label "maven"
                     }
