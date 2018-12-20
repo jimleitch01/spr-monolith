@@ -3,19 +3,13 @@ pipeline {
         label 'maven'
     }
     stages {
-        stage('GitCheckout'){
-            steps{
-                sh 'echo Git Checkout'
-                checkout scm
-                sh 'ls -l '
-            }}
-
 
         stage('Testing') {
             steps {
+                checkout scm
                 sh 'echo Testing'
                 sh '#find / -name settings-docker.xml '
-                sh 'mvn -B -s /usr/share/maven/ref/repository/settings-docker.xml -Dtest=PetControllerTests surefire:test  '
+                sh 'mvn -B -s /usr/share/maven/ref/repository/settings-docker.xml '
             }
         }
     }
