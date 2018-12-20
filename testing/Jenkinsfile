@@ -18,13 +18,13 @@ pipeline {
                     //     }
                     // }
                 }
-                stage('sureFire') {
+                stage('Integration') {
                     agent {
                         label "maven"
                     }
                     steps {
                         // checkout scm
-                        sh "mvn -B -s /usr/share/maven/ref/repository/settings-docker.xml surefire:test"
+                        sh "mvn -B -s /usr/share/maven/ref/repository/settings-docker.xml surefire:test -Dtest=PetclinicIntegrationTests"
                     }
                     // post {
                     //     always {
@@ -32,6 +32,86 @@ pipeline {
                     //     }
                     // }
                 }
+                stage('Model') {
+                    agent {
+                        label "maven"
+                    }
+                    steps {
+                        // checkout scm
+                        sh "mvn -B -s /usr/share/maven/ref/repository/settings-docker.xml surefire:test -Dtest=ValidatorTests"
+                    }
+                    // post {
+                    //     always {
+                    //         junit "**/TEST-*.xml"
+                    //     }
+                    // }
+                }
+                stage('Owner') {
+                    agent {
+                        label "maven"
+                    }
+                    steps {
+                        // checkout scm
+                        sh "mvn -B -s /usr/share/maven/ref/repository/settings-docker.xml surefire:test -Dtest=*Controller* -Dtest=*Formatter*" 
+                    }
+                    // post {
+                    //     always {
+                    //         junit "**/TEST-*.xml"
+                    //     }
+                    // }
+                }
+                stage('Service') {
+                    agent {
+                        label "maven"
+                    }
+                    steps {
+                        // checkout scm
+                        sh "mvn -B -s /usr/share/maven/ref/repository/settings-docker.xml surefire:test  -Dtest=ClinicServiceTests -Dtest=EntityUtils"
+                    }
+                    // post {
+                    //     always {
+                    //         junit "**/TEST-*.xml"
+                    //     }
+                    // }
+                }
+                stage('System') {
+                    agent {
+                        label "maven"
+                    }
+                    steps {
+                        // checkout scm
+                        sh "mvn -B -s /usr/share/maven/ref/repository/settings-docker.xml surefire:test -Dtest=CrashControllerTests"
+                    }
+                    // post {
+                    //     always {
+                    //         junit "**/TEST-*.xml"
+                    //     }
+                    // }
+                }
+                stage('Vet') {
+                    agent {
+                        label "maven"
+                    }
+                    steps {
+                        // checkout scm
+                        sh "mvn -B -s /usr/share/maven/ref/repository/settings-docker.xml surefire:test -Dtest=Vet*"
+                    }
+                    // post {
+                    //     always {
+                    //         junit "**/TEST-*.xml"
+                    //     }
+                    // }
+                }
+
+
+
+
+
+
+
+
+
+
                 stage('jMeter') {
                     agent {
                         label "maven"
