@@ -10,11 +10,11 @@ pipeline {
                     steps {
                         bat "mvn -B -s /usr/share/maven/ref/repository/settings-docker.xml jacoco:report-aggregate"
                     }
-                    post {
-                        always {
-                            junit "**/TEST-*.xml"
-                        }
-                    }
+                    // post {
+                    //     always {
+                    //         junit "**/TEST-*.xml"
+                    //     }
+                    // }
                 }
                 stage('Surefiretests') {
                     agent {
@@ -23,11 +23,11 @@ pipeline {
                     steps {
                         sh "mvn -B -s /usr/share/maven/ref/repository/settings-docker.xml surefire:test"
                     }
-                    post {
-                        always {
-                            junit "**/TEST-*.xml"
-                        }
-                    }
+                    // post {
+                    //     always {
+                    //         junit "**/TEST-*.xml"
+                    //     }
+                    // }
                 }
             }
         }
