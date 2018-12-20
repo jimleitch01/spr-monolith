@@ -9,7 +9,7 @@ pipeline {
                         label "maven"
                     }
                     steps {
-                        checkout scm
+                        // checkout scm
                         sh "mvn -B -s /usr/share/maven/ref/repository/settings-docker.xml jacoco:report-aggregate"
                     }
                     // post {
@@ -23,7 +23,7 @@ pipeline {
                         label "maven"
                     }
                     steps {
-                        checkout scm
+                        // checkout scm
                         sh "mvn -B -s /usr/share/maven/ref/repository/settings-docker.xml surefire:test"
                     }
                     // post {
@@ -37,8 +37,8 @@ pipeline {
                         label "maven"
                     }
                     steps {
-                        checkout scm
-                        sh "mvn -B -s /usr/share/maven/ref/repository/settings-docker.xml surefire:test"
+                        // checkout scm
+                        sh "sleep 15"
                     }
                     // post {
                     //     always {
