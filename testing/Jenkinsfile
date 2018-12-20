@@ -1,14 +1,14 @@
 pipeline {
     agent none
     stages {
-        stage('Run Tests') {
+        stage('Init Tests') {
             parallel {
                 stage('JaCoCo Testing') {
                     agent {
                         label "maven"
                     }
                     steps {
-                        bat "mvn -B -s /usr/share/maven/ref/repository/settings-docker.xml jacoco:report-aggregate"
+                        sh "mvn -B -s /usr/share/maven/ref/repository/settings-docker.xml jacoco:report-aggregate"
                     }
                     // post {
                     //     always {
