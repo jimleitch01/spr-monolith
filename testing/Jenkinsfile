@@ -1,15 +1,34 @@
 pipeline {
-    agent {
-        label 'maven'
-    }
+    agent none
     stages {
-
-        stage('Testing') {
-            steps {
-                checkout scm
-                sh 'echo Testing'
-                sh '#find / -name settings-docker.xml '
-                sh 'mvn -B -s /usr/share/maven/ref/repository/settings-docker.xml test'
+        stage('Run Tests') {
+            parallel {
+                stage('JaCoCo Testing') {
+                    agent {
+                        label "maven"
+                    }
+                    steps {
+                        bat "mvn -B -s /usr/share/maven/ref/repository/settings-docker.xml jacoco:report-aggregate"
+                    }
+                    post {
+                        always {
+                            junit "**/TEST-*.xml"
+                        }
+                    }
+                }
+                stage('Surefiretests') {
+                    agent {
+                        label "maven"
+                    }
+                    steps {
+                        sh "mvn -B -s /usr/share/maven/ref/repository/settings-docker.xml surefire:test"
+                    }
+                    post {
+                        always {
+                            junit "**/TEST-*.xml"
+                        }
+                    }
+                }
             }
         }
     }
@@ -18,16 +37,3 @@ pipeline {
 
 
 
-// parallel 'test1':{
-//     node('Linux') {
-//         withAWS(credentials: 'xxxxxxxx') {
-//             s3Download bucket: 'test1', file: 'teste.txt', path: 'd2/d5/'
-//     	}
-//     }
-// }, 'test2':{
-//     node('MACOS') {
-//         withAWS(credentials: 'xxxxxxxxxx') {
-//             s3Download bucket: 'test1', file: 'teste.txt', path: 'd2/d5/'
-//     	}
-//     }
-// }
