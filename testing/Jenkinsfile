@@ -117,7 +117,17 @@ pipeline {
                     //     }
                     // }
                 }
+
+                stage('updateJIRA') {
+                    jiraComment(issueKey: "PE-52", body: "Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) built. Please go to ${env.BUILD_URL}.")
+
+                }
+
+
             }
+
+
+
         }
     }
 }
